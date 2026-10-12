@@ -60,9 +60,9 @@ export default function App() {
                 </div>
                 <div>
                   <h3 className="font-extrabold text-lg text-white tracking-wider">
-                    KIANKO <span style={{ color: themeColor }}>STEEL</span>
+                    KIANKO <span style={{ color: themeColor }}>COMPANY</span>
                   </h3>
-                  <p className="text-[10px] text-blue-300 font-semibold">{isAr ? 'كيانكو للصناعات الحديدية' : 'Kianko Steel Industries'}</p>
+                  <p className="text-[10px] text-blue-300 font-semibold">{isAr ? 'شركة كيان لمنتجات الحديد' : 'KIAN IRON PRODUCTS COMPANY'}</p>
                 </div>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
@@ -98,7 +98,7 @@ export default function App() {
           </div>
 
           <div className="pt-8 border-t border-blue-950/80 text-center text-xs text-slate-500 font-medium">
-            <p>All rights reserved to KIANKO STEEL . ©{new Date().getFullYear()}</p>
+            <p>All rights reserved to KIANKO COMPANY . ©{new Date().getFullYear()}</p>
           </div>
 
         </div>

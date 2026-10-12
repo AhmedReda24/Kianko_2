@@ -52,16 +52,16 @@ export default function Navbar({
             <div className="bg-white p-1.5 rounded-xl shadow-md border border-slate-200 hover:scale-105 transition-transform duration-300">
               <img 
                 src={logoImg} 
-                alt="Kianko Steel Logo" 
+                alt="KIANKO COMPANY" 
                 className="h-10 sm:h-12 w-auto object-contain"
               />
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-black tracking-wider" style={{ color: themeColor }}>
-                KIANKO <span className={darkMode ? 'text-white' : 'text-slate-900'}>STEEL</span>
+                KIANKO <span className={darkMode ? 'text-white' : 'text-slate-900'}>COMPANY</span>
               </h1>
               <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">
-                {isAr ? 'كيانكو للصناعات الحديدية' : 'Kianko For Steel Industries'}
+                {isAr ? 'شركة كيان لمنتجات الحديد' : 'KIAN IRON PRODUCTS COMPANY'}
               </p>
             </div>
           </div>

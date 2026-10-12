@@ -61,7 +61,7 @@ export default function Home({ setActivePage, lang = 'en', themeColor = '#C9252C
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md text-white font-bold text-xs tracking-wider uppercase shadow-2xl transition-colors duration-300"
             style={{ backgroundColor: themeColor }}
           >
-            <span>{isAr ? 'مجموعة كيانكو للصناعات الحديدية' : 'KIANKO STEEL INDUSTRIAL GROUP'}</span>
+            <span>{isAr ? 'شركة كيان لمنتجات الحديد' : 'KIAN IRON PRODUCTS COMPANY'}</span>
           </div>
           
           <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-tight drop-shadow-2xl">
@@ -106,7 +106,7 @@ export default function Home({ setActivePage, lang = 'en', themeColor = '#C9252C
 
           <div className="space-y-6">
             <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
-              KIANKO STEEL
+              KIANKO COMPANY
             </h2>
             
             <p className="text-slate-300 text-base leading-relaxed font-normal">

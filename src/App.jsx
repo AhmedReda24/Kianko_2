@@ -98,7 +98,7 @@ export default function App() {
           </div>
 
           <div className="pt-8 border-t border-blue-950/80 text-center text-xs text-slate-500 font-medium">
-            <p>All rights reserved to KIANKO STEEL GROUP. ©{new Date().getFullYear()}</p>
+            <p>All rights reserved to KIANKO STEEL . ©{new Date().getFullYear()}</p>
           </div>
 
         </div>

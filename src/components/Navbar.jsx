@@ -178,12 +178,73 @@ export default function Navbar({
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-2">
-            <button onClick={() => setIsOpen(!isOpen)} className="p-2">
+            <button 
+              onClick={() => setIsOpen(!isOpen)} 
+              className="p-2 rounded-lg focus:outline-none"
+              aria-label="Toggle Mobile Menu"
+            >
               {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
           </div>
         </div>
       </div>
+
+      {/* قائمة الهواتف المحمولة (Mobile Dropdown Menu) - معدلة باللون الصحيح */}
+      {isOpen && (
+        <div className={`lg:hidden border-t px-4 py-6 space-y-4 shadow-2xl transition-colors ${
+          darkMode ? 'bg-[#061024] border-blue-900/50 text-white' : 'bg-white border-slate-200 text-slate-800'
+        }`}>
+          <div className="flex flex-col space-y-2">
+            {pagesList.map((item) => {
+              const isActive = activePage === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActivePage(item.id);
+                    setIsOpen(false);
+                  }}
+                  className={`text-right px-4 py-3 rounded-xl text-sm font-bold transition-all flex items-center justify-between ${
+                    isActive 
+                      ? 'text-white shadow-md' 
+                      : darkMode ? 'text-gray-300 hover:bg-slate-800/80 hover:text-white' : 'text-slate-700 hover:bg-slate-100'
+                  }`}
+                  style={{
+                    backgroundColor: isActive ? themeColor : undefined
+                  }}
+                >
+                  <span>{isAr ? item.ar : item.en}</span>
+                  {isActive && <span className="w-2 h-2 rounded-full bg-white"></span>}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="pt-4 border-t border-slate-200 dark:border-blue-900/50 flex items-center justify-between gap-3">
+            {/* Dark/Light Mode */}
+            <button 
+              onClick={() => setDarkMode(!darkMode)}
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold"
+            >
+              {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
+              <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+            </button>
+
+            {/* Language Switcher */}
+            <button 
+              onClick={() => {
+                setLang(isAr ? 'en' : 'ar');
+                setIsOpen(false);
+              }}
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-white text-xs font-bold shadow"
+              style={{ backgroundColor: themeColor }}
+            >
+              <Globe className="w-4 h-4" />
+              <span>{isAr ? 'English' : 'العربية'}</span>
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

@@ -41,7 +41,7 @@ export default function Contact({ lang }) {
               </div>
               <div>
                 <h4 className="font-bold text-slate-300">{isAr ? 'المصنع والإدارة' : 'Factory & Address'}</h4>
-                <p className="text-slate-400 mt-1">Suez Canal / Ismailia / Cairo Industrial Area, Egypt</p>
+                <p className="text-slate-400 mt-1">Al-Kharj Road, Industrial Area / Riyadh, Saudi Arabia</p>
               </div>
             </div>
 
@@ -51,7 +51,7 @@ export default function Contact({ lang }) {
               </div>
               <div>
                 <h4 className="font-bold text-slate-300">{isAr ? 'الهاتف' : 'Phone Numbers'}</h4>
-                <p className="text-slate-400 mt-1">+20 123 456 7890</p>
+                <p className="text-slate-400 mt-1">+966 12 456 7890</p>
               </div>
             </div>
 
@@ -83,7 +83,7 @@ export default function Contact({ lang }) {
                   <input
                     type="text"
                     required
-                    placeholder="Ahmed Gouda"
+                    placeholder="Ahmed Negm"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-[#C9252C] outline-none"
@@ -94,7 +94,7 @@ export default function Contact({ lang }) {
                   <input
                     type="tel"
                     required
-                    placeholder="+20 10xxxxxxxx"
+                    placeholder="+966 5xxxxxxxx"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-[#C9252C] outline-none"

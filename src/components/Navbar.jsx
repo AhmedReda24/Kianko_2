@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X, Globe, ChevronDown, Sun, Moon, Palette } from 'lucide-react';
-import logoImg from '../assets/logo.png';
-
+import logoImg from "../../assets/logo.png";
 export default function Navbar({ 
   activePage, 
   setActivePage, 

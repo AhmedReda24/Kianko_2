@@ -1,9 +1,12 @@
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
-import { ArrowRight, Award, Layers, MapPin } from 'lucide-react';
+import { Award, Layers, MapPin, Phone } from 'lucide-react';
 import heroVideo from "../../../assets/hero.mp4";
 import { ROUTES } from '../../routes';
+import CtaLink from '../ui/CtaLink';
+import Sparks from './Sparks';
+import { useLocations } from '../../hooks/useContent';
 
 const LETTERS = 'KIANKO'.split('');
 const EASE = [0.22, 1, 0.36, 1];
@@ -11,6 +14,8 @@ const EASE = [0.22, 1, 0.36, 1];
 export default function HeroSection({ isAr, themeColor }) {
   const ref = useRef(null);
   const reduce = useReducedMotion();
+  const locations = useLocations();
+  const phone = (locations.find((l) => l.type === 'company') ?? locations[0]).phone;
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const videoY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
@@ -52,6 +57,7 @@ export default function HeroSection({ isAr, themeColor }) {
       </motion.div>
 
       <div className="absolute inset-0 bg-gradient-to-r rtl:bg-gradient-to-l from-[#07132B] via-[#07132B]/80 to-[#07132B]/30 z-10" />
+      <Sparks />
 
       <motion.div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full pb-28 text-start"
@@ -100,21 +106,22 @@ export default function HeroSection({ isAr, themeColor }) {
             : 'Precision Steel Fabrication, Rebar Rolling, and Heavy Duty Cable Management Manufacturing.'}
         </motion.p>
 
-        <motion.div {...fade(1.25)} className="pt-8 flex flex-wrap gap-4">
-          <Link
-            to={ROUTES.products}
-            className="inline-flex items-center gap-3 text-white font-bold px-8 py-4 rounded-xl shadow-2xl transition-transform duration-300 hover:-translate-y-1 active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            style={{ backgroundColor: themeColor }}
-          >
-            <span>{isAr ? 'تصفح المنتجات' : 'Explore Products'}</span>
-            <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-          </Link>
-          <Link
-            to={ROUTES.locations}
-            className="inline-flex items-center text-white font-bold px-8 py-4 rounded-xl border border-white/40 bg-white/5 backdrop-blur-sm transition-colors duration-300 hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
+        <motion.div {...fade(1.25)} className="pt-8 flex flex-wrap items-center gap-4">
+          <CtaLink to={ROUTES.products} themeColor={themeColor}>
+            {isAr ? 'تصفح المنتجات' : 'Explore Products'}
+          </CtaLink>
+          <CtaLink to={ROUTES.locations} variant="glass" arrow={false}>
             {isAr ? 'فروعنا ومكاتبنا' : 'Our Locations'}
-          </Link>
+          </CtaLink>
+          <a
+            href={`tel:${phone.replace(/\s/g, '')}`}
+            className="group inline-flex items-center gap-3 text-white font-bold px-2 py-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <span className="grid h-10 w-10 place-items-center rounded-full border border-white/30 transition-colors duration-300 group-hover:border-transparent" style={{ '--c': themeColor }}>
+              <Phone className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" style={{ color: themeColor }} />
+            </span>
+            <span dir="ltr" className="underline-offset-4 group-hover:underline">{phone}</span>
+          </a>
         </motion.div>
       </motion.div>
 
@@ -132,7 +139,7 @@ export default function HeroSection({ isAr, themeColor }) {
               className="group flex items-center gap-4 px-6 py-4 transition-colors duration-300 hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-white"
             >
               <span
-                className="grid place-items-center h-11 w-11 rounded-lg text-white shrink-0 transition-transform duration-300 group-hover:scale-110"
+                className="grid place-items-center h-11 w-11 rounded-lg text-white shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"
                 style={{ backgroundColor: themeColor }}
               >
                 <Icon className="w-5 h-5" />

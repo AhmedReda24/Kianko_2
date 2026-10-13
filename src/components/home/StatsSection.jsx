@@ -1,4 +1,5 @@
 import AnimatedCounter from '../AnimatedCounter';
+import TiltCard from '../ui/TiltCard';
 
 const stats = [
   {
@@ -32,9 +33,9 @@ export default function StatsSection({ isAr, themeColor }) {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="grid md:grid-cols-2 gap-6">
         {stats.map((item) => (
-          <article
+          <TiltCard
             key={item.title}
-            className="relative h-64 rounded-2xl overflow-hidden border border-blue-900/60 group shadow-2xl text-start"
+            className="h-64 rounded-2xl overflow-hidden border border-blue-900/60 group shadow-2xl text-start"
           >
             <img
               src={item.img}
@@ -57,7 +58,7 @@ export default function StatsSection({ isAr, themeColor }) {
               </h3>
               <p className="mt-2 text-sm text-blue-300 font-medium">{isAr ? item.subtitleAr : item.subtitle}</p>
             </div>
-          </article>
+          </TiltCard>
         ))}
       </div>
     </section>

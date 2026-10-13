@@ -1,8 +1,10 @@
 import { Download, ShieldCheck } from 'lucide-react';
-import { accreditations } from '../data/accreditations';
+import { useAccreditations } from '../hooks/useContent';
+import SpotlightCard from './ui/SpotlightCard';
 
 export default function CertificationsGrid({ lang = 'en', themeColor = '#C9252C', badge, title, intro }) {
   const isAr = lang === 'ar';
+  const accreditations = useAccreditations();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12 text-start">
@@ -16,9 +18,10 @@ export default function CertificationsGrid({ lang = 'en', themeColor = '#C9252C'
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {accreditations.map((c) => (
-          <article
+          <SpotlightCard
+            as="article"
             key={c.id}
-            className="bg-[#0A1832] rounded-3xl p-6 border border-blue-900/60 shadow-2xl flex flex-col justify-between space-y-6 group hover:border-slate-500 transition-colors duration-300"
+            className="bg-[#0A1832] rounded-3xl p-6 border border-blue-900/60 shadow-2xl flex flex-col justify-between space-y-6 group hover:border-slate-500 hover:-translate-y-1 transition-all duration-500"
           >
             <div className="rounded-2xl border-2 border-amber-500/40 bg-gradient-to-br from-slate-900 via-[#0B1E3D] to-slate-950 p-6 h-56 flex flex-col justify-between shadow-2xl">
               <div className="flex justify-between items-start">
@@ -50,7 +53,7 @@ export default function CertificationsGrid({ lang = 'en', themeColor = '#C9252C'
                 <span>{isAr ? 'تحميل ملف الشهادة' : 'Download Certificate'}</span>
               </a>
             )}
-          </article>
+          </SpotlightCard>
         ))}
       </div>
     </div>

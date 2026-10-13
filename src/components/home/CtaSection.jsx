@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import { ROUTES } from '../../routes';
+import CtaLink from '../ui/CtaLink';
+import { useLocations } from '../../hooks/useContent';
 
 export default function CtaSection({ isAr, themeColor }) {
+  const locations = useLocations();
+  const phone = (locations.find((l) => l.type === 'company') ?? locations[0]).phone;
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
       <div
@@ -16,14 +19,18 @@ export default function CtaSection({ isAr, themeColor }) {
           <p className="mt-3 text-white/90">
             {isAr ? 'ابعتلنا المواصفات ونرد عليك بعرض سعر.' : 'Send us your specifications and we will reply with a quotation.'}
           </p>
+          <a
+            href={`tel:${phone.replace(/\s/g, '')}`}
+            className="mt-4 inline-flex items-center gap-2 font-bold text-white hover:underline underline-offset-4"
+          >
+            <Phone className="w-5 h-5" />
+            <span>{isAr ? 'أو اتصل بنا:' : 'Or call us:'}</span>
+            <span dir="ltr">{phone}</span>
+          </a>
         </div>
-        <Link
-          to={ROUTES.contact}
-          className="inline-flex items-center gap-3 bg-white text-[#07132B] font-bold px-8 py-4 rounded-xl shadow-xl transition-transform duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        >
-          <span>{isAr ? 'اطلب عرض سعر' : 'Request a quote'}</span>
-          <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-        </Link>
+        <CtaLink to={ROUTES.contact} variant="light">
+          {isAr ? 'اطلب عرض سعر' : 'Request a quote'}
+        </CtaLink>
       </div>
     </section>
   );

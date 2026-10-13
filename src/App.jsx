@@ -1,8 +1,11 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router';
+import { MotionConfig, motion } from 'motion/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import ScrollProgress from './components/ui/ScrollProgress';
+import BackToTop from './components/ui/BackToTop';
 import { ROUTES, PAGE_TITLES, pageKeyFromPath } from './routes';
 
 // كل صفحة في ملف لوحدها وبتتحمّل عند الحاجة فقط (Code Splitting)
@@ -35,14 +38,8 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [themeColor, setThemeColor] = useState('#C9252C'); // Kianko Red
 
-  const navigate = useNavigate();
   const { pathname } = useLocation();
-
-  // الـ Navbar القديم بيستخدم activePage / setActivePage،
-  // فبنحوّلهم لـ URL حقيقي من هنا من غير ما نلمس الـ Navbar.
   const pageKey = pageKeyFromPath(pathname);
-  const activePage = pageKey ?? 'home';
-  const setActivePage = useCallback((key) => navigate(ROUTES[key] ?? ROUTES.home), [navigate]);
 
   useEffect(() => {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -57,16 +54,16 @@ export default function App() {
   const pageProps = { lang, themeColor };
 
   return (
+    <MotionConfig reducedMotion="user">
     <div
       className={`min-h-screen transition-colors duration-300 ${
         darkMode ? 'bg-[#07132B] text-slate-100' : 'bg-slate-50 text-slate-800'
       }`}
     >
       <ScrollToTop />
+      <ScrollProgress themeColor={themeColor} />
 
       <Navbar
-        activePage={activePage}
-        setActivePage={setActivePage}
         lang={lang}
         setLang={setLang}
         darkMode={darkMode}
@@ -76,6 +73,12 @@ export default function App() {
       />
 
       <main className="pb-12">
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        >
         <Suspense fallback={<PageLoader themeColor={themeColor} />}>
           <Routes>
             <Route path={ROUTES.home} element={<Home {...pageProps} />} />
@@ -92,9 +95,12 @@ export default function App() {
             <Route path="*" element={<NotFoundPage {...pageProps} />} />
           </Routes>
         </Suspense>
+        </motion.div>
       </main>
 
       <Footer lang={lang} themeColor={themeColor} />
+      <BackToTop themeColor={themeColor} isAr={lang === 'ar'} />
     </div>
+    </MotionConfig>
   );
 }

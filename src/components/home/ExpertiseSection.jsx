@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ArrowRight } from 'lucide-react';
 import { ROUTES } from '../../routes';
+import SectionHeading from '../ui/SectionHeading';
 
 const areas = [
   {
@@ -37,9 +38,9 @@ export default function ExpertiseSection({ isAr, themeColor }) {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-start">
       <div className="max-w-2xl mb-10">
-        <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-white">
+        <SectionHeading themeColor={themeColor}>
           {isAr ? 'مجالات خبرتنا' : 'Areas of Expertise'}
-        </h2>
+        </SectionHeading>
         <p className="mt-4 text-slate-300 leading-relaxed">
           {isAr
             ? 'من حوامل الكابلات إلى حديد التسليح والجلفنة، نغطي ما يحتاجه المشروع من الصلب بجودة ثابتة.'
@@ -68,6 +69,9 @@ export default function ExpertiseSection({ isAr, themeColor }) {
                 } max-lg:brightness-[0.6]`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#061024] via-[#061024]/50 to-transparent" />
+              <span aria-hidden="true" dir="ltr" className="absolute top-4 start-5 font-display text-5xl font-black text-white/25 transition-colors duration-500 group-hover:text-white/60">
+                {String(i + 1).padStart(2, '0')}
+              </span>
               <div
                 className="absolute top-0 inset-x-0 h-1 transition-opacity duration-500"
                 style={{ backgroundColor: themeColor, opacity: isActive ? 1 : 0 }}

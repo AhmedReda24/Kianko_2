@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 // بيرجّع الصفحة لأولها كل ما المسار يتغيّر
 export default function ScrollToTop() {

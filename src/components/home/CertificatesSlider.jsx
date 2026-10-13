@@ -1,36 +1,29 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { Award, ChevronLeft, ChevronRight, FileCheck2, X } from 'lucide-react';
-import { certificates } from '../../data/certificates';
+import { Award, ChevronLeft, ChevronRight, FileText, X } from 'lucide-react';
+import { useCertificates } from '../../hooks/useContent';
+import SectionHeading from '../ui/SectionHeading';
 
 export default function CertificatesSlider({ isAr, themeColor }) {
   const reduce = useReducedMotion();
-  const autoplay = useRef(Autoplay({ delay: 3500, stopOnInteraction: false, stopOnMouseEnter: true }));
+  const certificates = useCertificates();
+  const [autoplay] = useState(() => Autoplay({ delay: 3500, stopOnInteraction: false, stopOnMouseEnter: true }));
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: 'start', direction: isAr ? 'rtl' : 'ltr' },
-    reduce ? [] : [autoplay.current]
+    reduce ? [] : [autoplay]
   );
   const [selected, setSelected] = useState(0);
-  const [snaps, setSnaps] = useState([]);
   const [zoom, setZoom] = useState(null);
-
-  const sync = useCallback(() => {
-    if (!emblaApi) return;
-    setSnaps(emblaApi.scrollSnapList());
-    setSelected(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
-    sync();
-    emblaApi.on('select', sync).on('reInit', sync);
-    return () => {
-      emblaApi.off('select', sync).off('reInit', sync);
-    };
-  }, [emblaApi, sync]);
+    const onSelect = () => setSelected(emblaApi.selectedScrollSnap());
+    emblaApi.on('select', onSelect);
+    return () => emblaApi.off('select', onSelect);
+  }, [emblaApi]);
 
   useEffect(() => {
     if (!zoom) return;
@@ -49,9 +42,9 @@ export default function CertificatesSlider({ isAr, themeColor }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-start">
         <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
           <div className="max-w-2xl">
-            <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-white">
+            <SectionHeading themeColor={themeColor}>
               {isAr ? 'الاعتمادات وشهادات الخبرة' : 'Accreditations & Experience Certificates'}
-            </h2>
+            </SectionHeading>
             <p className="mt-4 text-slate-300 leading-relaxed">
               {isAr
                 ? 'اعتمادات وشهادات من جهات معتمدة تؤكد جودة منتجاتنا وسجل خبرتنا في المشاريع.'
@@ -71,7 +64,7 @@ export default function CertificatesSlider({ isAr, themeColor }) {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex -ms-5">
             {certificates.map((c) => {
-              const Icon = c.type === 'experience' ? FileCheck2 : Award;
+              const Icon = c.type === 'experience' ? FileText : Award;
               const typeLabel =
                 c.type === 'experience' ? (isAr ? 'شهادة خبرة' : 'Experience') : isAr ? 'اعتماد' : 'Accreditation';
               const title = isAr ? c.titleAr : c.title;
@@ -88,7 +81,7 @@ export default function CertificatesSlider({ isAr, themeColor }) {
                       <img src={c.img} alt={title} loading="lazy" className="w-full h-full object-contain" />
                     </button>
                   ) : (
-                    <div className="aspect-[3/4] rounded-xl bg-[#0B1B3A] border border-blue-900/70 p-3 shadow-xl">
+                    <div className="aspect-[3/4] rounded-xl bg-[#0B1B3A] border border-blue-900/70 p-3 shadow-xl transition-all duration-300 hover:-translate-y-1.5 hover:border-slate-500 hover:shadow-2xl">
                       <div className="h-full rounded-lg border border-dashed border-blue-400/30 flex flex-col items-center justify-center gap-4 px-6 text-center">
                         <Icon className="w-12 h-12" style={{ color: themeColor }} />
                         <span className="font-bold text-white leading-snug">{title}</span>
@@ -103,13 +96,13 @@ export default function CertificatesSlider({ isAr, themeColor }) {
         </div>
 
         <div className="mt-8 flex justify-center gap-2" role="tablist" aria-label={isAr ? 'الشرائح' : 'Slides'}>
-          {snaps.map((_, i) => (
+          {certificates.map((c, i) => (
             <button
-              key={i}
+              key={c.id}
               type="button"
               role="tab"
               aria-selected={i === selected}
-              aria-label={`${i + 1} / ${snaps.length}`}
+              aria-label={`${i + 1} / ${certificates.length}`}
               onClick={() => emblaApi?.scrollTo(i)}
               className="h-2 rounded-full transition-all duration-300"
               style={{

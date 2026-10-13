@@ -1,9 +1,9 @@
 import CertificationsGrid from '../components/CertificationsGrid';
-import { accreditations } from '../data/accreditations';
+import { useAccreditations } from '../hooks/useContent';
 
 export default function IsoCertificationsPage({ lang = 'en', themeColor }) {
   const isAr = lang === 'ar';
-  const n = accreditations.length;
+  const n = useAccreditations().length;
   return (
     <CertificationsGrid
       lang={lang}

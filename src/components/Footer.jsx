@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
-import logoImg from "../../assets/logo.png";
+import { Link } from 'react-router';
 import { ROUTES } from '../routes';
+import logoImg from '../../assets/logo.png';
+import SocialLinks from './SocialLinks';
 
 export default function Footer({ lang = 'en', themeColor = '#C9252C' }) {
   const isAr = lang === 'ar';
-  const linkCls = 'block hover:text-white transition-colors';
+  const linkCls = 'block w-fit hover:text-white transition-all duration-300 hover:translate-x-1 rtl:hover:-translate-x-1';
 
   return (
     <footer className="bg-[#050C1E] text-slate-300 pt-16 pb-10 border-t border-blue-950 relative z-30">
@@ -29,6 +30,7 @@ export default function Footer({ lang = 'en', themeColor = '#C9252C' }) {
                 ? 'حلول هندسية وتشكيل معادن فائقة الدقة في الشرق الأوسط.'
                 : 'Precision engineering and steel manufacturing solutions across the MENA region.'}
             </p>
+            <SocialLinks themeColor={themeColor} isAr={isAr} />
           </div>
 
           <nav className="space-y-3 text-xs" aria-label={isAr ? 'الشركة' : 'Company'}>

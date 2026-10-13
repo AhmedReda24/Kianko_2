@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Briefcase, Building2, Clock, Mail, MapPin, Phone } from 'lucide-react';
-import { locations } from '../../data/locations';
+import { useLocations } from '../../hooks/useContent';
+import SectionHeading from '../ui/SectionHeading';
 
 const TYPE = {
   company: { icon: Building2, label: 'Main Company', labelAr: 'الشركة الرئيسية' },
@@ -10,22 +11,21 @@ const TYPE = {
 };
 
 export default function LocationsSection({ isAr, themeColor, asPage = false }) {
+  const locations = useLocations();
   const [activeId, setActiveId] = useState(locations[0].id);
-  const active = locations.find((l) => l.id === activeId);
+  const active = locations.find((l) => l.id === activeId) ?? locations[0];
   const pick = (en, ar) => (isAr ? ar : en);
 
   const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     `${active.name} ${active.address}`
   )}`;
 
-  const Heading = asPage ? 'h1' : 'h2';
-
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-start">
       <div className="max-w-2xl mb-10">
-        <Heading className="font-display text-4xl sm:text-5xl font-extrabold text-white">
+        <SectionHeading as={asPage ? 'h1' : 'h2'} themeColor={themeColor}>
           {pick('Our Company, Branches & Office', 'الشركة والفروع والمكتب')}
-        </Heading>
+        </SectionHeading>
         <p className="mt-4 text-slate-300 leading-relaxed">
           {pick(
             'One company, two branches and an office — pick a location to see how to reach it.',
@@ -53,10 +53,13 @@ export default function LocationsSection({ isAr, themeColor, asPage = false }) {
                 style={{ borderColor: isActive ? themeColor : 'transparent' }}
               >
                 <span
-                  className="grid place-items-center h-11 w-11 rounded-lg shrink-0 text-white"
+                  className="relative grid place-items-center h-11 w-11 rounded-lg shrink-0 text-white"
                   style={{ backgroundColor: isActive ? themeColor : 'rgba(255,255,255,0.1)' }}
                 >
-                  <Icon className="w-5 h-5" />
+                  {isActive && (
+                    <span aria-hidden="true" className="absolute inset-0 rounded-lg animate-ping opacity-30" style={{ backgroundColor: themeColor }} />
+                  )}
+                  <Icon className="relative w-5 h-5" />
                 </span>
                 <span className="min-w-0">
                   <span className="block text-xs font-semibold text-blue-300">{pick(meta.label, meta.labelAr)}</span>

@@ -1,5 +1,6 @@
 import HeroSection from '../components/home/HeroSection';
 import AboutSection from '../components/home/AboutSection';
+import FacilitiesSection from '../components/home/FacilitiesSection';
 import StatsSection from '../components/home/StatsSection';
 import ExpertiseSection from '../components/home/ExpertiseSection';
 import CertificatesSlider from '../components/home/CertificatesSlider';
@@ -14,6 +15,7 @@ export default function Home({ lang = 'en', themeColor = '#C9252C' }) {
     <div className="bg-[#07132B] text-white min-h-screen">
       <HeroSection {...shared} />
       <AboutSection {...shared} />
+      <FacilitiesSection {...shared} />
       <StatsSection {...shared} />
       <ExpertiseSection {...shared} />
       <CertificatesSlider key={lang} {...shared} />

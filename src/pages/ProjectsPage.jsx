@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom';
-import { projects } from '../data/projects';
+import { Link } from 'react-router';
+import { useProjects } from '../hooks/useContent';
 import { ROUTES } from '../routes';
 
 export default function ProjectsPage({ lang = 'en', themeColor = '#C9252C' }) {
   const isAr = lang === 'ar';
+  const projects = useProjects();
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-12 text-start">
       <div className="max-w-2xl space-y-3">
